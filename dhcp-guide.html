@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guide DHCP pour CCNA</title>
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #1e40af;
+            --bg-color: #f8fafc;
+            --text-color: #1e293b;
+            --code-bg: #1e293b;
+            --code-color: #e2e8f0;
+            --success-color: #059669;
+            --warning-color: #d97706;
+            --info-color: #0284c7;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background: var(--bg-color);
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding: 2rem;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+        }
+
+        nav {
+            background: white;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 4px -1px rgb(0 0 0 / 0.1);
+            top: 1rem;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            padding: 0;
+        }
+
+        nav a {
+            color: var(--primary-color);
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 0.25rem;
+            transition: all 0.3s ease;
+        }
+
+        nav a:hover {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        h2 {
+            color: var(--primary-color);
+            margin: 2rem 0 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--primary-color);
+        }
+
+        h3 {
+            color: var(--secondary-color);
+            margin: 1.5rem 0 1rem;
+        }
+
+        h4 {
+            color: var(--info-color);
+            margin: 1rem 0;
+        }
+
+        p {
+            margin-bottom: 1rem;
+        }
+
+        ul, ol {
+            margin: 1rem 0;
+            padding-left: 2rem;
+        }
+
+        li {
+            margin-bottom: 0.5rem;
+        }
+
+        pre {
+            background: var(--code-bg);
+            color: var(--code-color);
+            padding: 1rem;
+            border-radius: 0.5rem;
+            overflow-x: auto;
+            margin: 1rem 0;
+            box-shadow: inset 0 2px 4px 0 rgb(0 0 0 / 0.1);
+        }
+
+        code {
+            font-family: 'Consolas', 'Monaco', monospace;
+        }
+
+        .section {
+            background: white;
+            padding: 2rem;
+            margin: 2rem 0;
+            border-radius: 0.5rem;
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .section:hover {
+            transform: translateY(-2px);
+        }
+
+        .highlight {
+            background: #dbeafe;
+            padding: 1rem;
+            border-left: 4px solid var(--primary-color);
+            margin: 1rem 0;
+            border-radius: 0 0.5rem 0.5rem 0;
+        }
+
+        .info {
+            background: #e0f2fe;
+            border-left: 4px solid var(--info-color);
+        }
+
+        .warning {
+            background: #fef3c7;
+            border-left: 4px solid var(--warning-color);
+        }
+
+        .exercice {
+            background: #f0fdf4;
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+            margin: 2rem 0;
+            border: 1px solid #86efac;
+        }
+
+        .correction {
+            background: #fff7ed;
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+            margin: 2rem 0;
+            border: 1px solid var(--warning-color);
+        }
+
+        .step {
+            background: white;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 0.5rem;
+            border-left: 4px solid var(--success-color);
+        }
+
+        .command-note {
+            font-style: italic;
+            color: var(--info-color);
+            margin-top: 0.5rem;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 1rem;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            .section {
+                padding: 1rem;
+            }
+
+            nav ul {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Guide DHCP pour CCNA</h1>
+        <p>Dynamic Host Configuration Protocol - Théorie et Pratique</p>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="#theorie">Théorie</a></li>
+            <li><a href="#pratique">Pratique</a></li>
+            <li><a href="#exercice">Exercice</a></li>
+            <li><a href="#correction">Correction</a></li>
+        </ul>
+    </nav>
+
+    <div id="theorie" class="section">
+        <h2>Partie Théorique</h2>
+        
+        <h3>1. Définition et Rôle de DHCP</h3>
+        <p>Le DHCP est un protocole réseau qui automatise l'attribution des adresses IP et d'autres paramètres réseau aux appareils d'un réseau.</p>
+        
+        <div class="highlight">
+            <strong>But principal :</strong> Simplifier la configuration des appareils sur un réseau, éviter les conflits d'adresses IP et réduire les erreurs humaines.
+        </div>
+
+        <div class="highlight info">
+            <h4>Paramètres configurés par DHCP :</h4>
+            <ul>
+                <li>Adresse IP</li>
+                <li>Masque de sous-réseau</li>
+                <li>Passerelle par défaut</li>
+                <li>Serveurs DNS</li>
+                <li>Durée de bail</li>
+            </ul>
+        </div>
+
+        <h3>2. Processus DORA</h3>
+        <div class="step">
+            <strong>1. Discover (Découverte)</strong>
+            <p>Le client envoie un message de diffusion pour rechercher un serveur DHCP.</p>
+        </div>
+        <div class="step">
+            <strong>2. Offer (Offre)</strong>
+            <p>Le serveur DHCP répond avec une offre contenant une adresse IP disponible.</p>
+        </div>
+        <div class="step">
+            <strong>3. Request (Demande)</strong>
+            <p>Le client répond au serveur pour accepter l'offre.</p>
+        </div>
+        <div class="step">
+            <strong>4. Acknowledge (Accusé)</strong>
+            <p>Le serveur confirme l'attribution de l'adresse IP.</p>
+        </div>
+    </div>
+
+    <div id="pratique" class="section">
+        <h2>Partie Pratique</h2>
+        
+        <h3>Configuration d'un Serveur DHCP sur un Routeur Cisco</h3>
+        
+        <div class="highlight warning">
+            <strong>Important :</strong> Assurez-vous d'être en mode privilégié avant de commencer la configuration.
+        </div>
+        
+        <h4>Étape 1 : Entrer en mode configuration</h4>
+        <pre><code>Router> enable
+Router# configure terminal</code></pre>
+
+        <h4>Étape 2 : Créer un pool DHCP</h4>
+        <pre><code>Router(config)# ip dhcp pool NOM_DU_POOL
+Router(dhcp-config)# network 192.168.1.0 255.255.255.0
+Router(dhcp-config)# default-router 192.168.1.1
+Router(dhcp-config)# dns-server 8.8.8.8
+Router(dhcp-config)# lease 7</code></pre>
+        <div class="command-note">Chaque commande configure un aspect spécifique du service DHCP</div>
+    </div>
+
+    <div id="exercice" class="exercice">
+        <h2>Exercice Pratique</h2>
+        <h3>Objectif</h3>
+        <p>Configurer un serveur DHCP sur un routeur pour un réseau 192.168.10.0/24 avec :</p>
+        <ul>
+            <li>Plage DHCP : 192.168.10.11 à 192.168.10.254</li>
+            <li>Passerelle par défaut : 192.168.10.1</li>
+            <li>Serveur DNS : 8.8.8.8</li>
+            <li>Durée de bail : 3 jours</li>
+        </ul>
+    </div>
+
+    <div id="correction" class="correction">
+        <h2>Correction de l'Exercice</h2>
+        
+        <div class="highlight info">
+            <strong>Objectif :</strong> Configuration complète d'un serveur DHCP selon les spécifications données.
+        </div>
+
+        <h3>Étapes de la solution :</h3>
+
+        <div class="step">
+            <h4>1. Accéder au mode de configuration</h4>
+            <pre><code>Router> enable
+Router# configure terminal</code></pre>
+        </div>
+
+        <div class="step">
+            <h4>2. Exclure les adresses réservées</h4>
+            <pre><code>Router(config)# ip dhcp excluded-address 192.168.10.1 192.168.10.10</code></pre>
+            <div class="command-note">Cette commande réserve les 10 premières adresses pour les équipements statiques</div>
+        </div>
+
+        <div class="step">
+            <h4>3. Créer et configurer le pool DHCP</h4>
+            <pre><code>Router(config)# ip dhcp pool RESEAU_LOCAL
+Router(dhcp-config)# network 192.168.10.0 255.255.255.0
+Router(dhcp-config)# default-router 192.168.10.1
+Router(dhcp-config)# dns-server 8.8.8.8
+Router(dhcp-config)# lease 3</code></pre>
+        </div>
+
+        <div class="step">
+            <h4>4. Vérification de la configuration</h4>
+            <pre><code>Router# show running-config | section dhcp
+Router# show ip dhcp binding
+Router# show ip dhcp pool</code></pre>
+        </div>
+
+        <div class="highlight">
+            <h4>Validation</h4>
+            <p>Pour vérifier que votre configuration fonctionne :</p>
+            <ol>
+                <li>Connectez un PC au réseau</li>
+                <li>Configurez l'interface réseau en DHCP</li>
+                <li>Vérifiez que le PC reçoit une adresse IP dans la plage définie</li>
+                <li>Testez la connectivité avec un ping vers la passerelle</li>
+            </ol>
+        </div>
+    </div>
+</body>
+</html>
