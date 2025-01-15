@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DHCP Explained - CCNA</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header class="header">
+        <h1>DHCP Explained for CCNA</h1>
+        <p>Your guide to understanding and configuring DHCP</p>
+    </header>
+    
+    <main class="container">
+        <section class="section">
+            <h2>Theory</h2>
+            <article>
+                <h3>What is DHCP?</h3>
+                <p>DHCP (Dynamic Host Configuration Protocol) is a network protocol that automates the assignment of IP addresses and other network settings to devices in a network.</p>
+            </article>
+            <article>
+                <h3>How DHCP Works (DORA)</h3>
+                <ul>
+                    <li><strong>Discover:</strong> Client broadcasts a request for a DHCP server.</li>
+                    <li><strong>Offer:</strong> Server offers an IP address.</li>
+                    <li><strong>Request:</strong> Client requests the offered IP address.</li>
+                    <li><strong>Acknowledge:</strong> Server confirms the IP assignment.</li>
+                </ul>
+            </article>
+        </section>
+
+        <section class="section">
+            <h2>Practical Configuration</h2>
+            <article>
+                <h3>Configuring DHCP on a Cisco Router</h3>
+                <pre><code>
+Router> enable
+Router# configure terminal
+Router(config)# ip dhcp pool POOL_NAME
+Router(dhcp-config)# network 192.168.1.0 255.255.255.0
+Router(dhcp-config)# default-router 192.168.1.1
+Router(dhcp-config)# dns-server 8.8.8.8
+Router(dhcp-config)# lease 7
+                </code></pre>
+            </article>
+            <article>
+                <h3>Excluding IP Addresses</h3>
+                <pre><code>
+Router(config)# ip dhcp excluded-address 192.168.1.1 192.168.1.10
+                </code></pre>
+            </article>
+        </section>
+
+        <section class="section exercise">
+            <h2>Practice Exercise</h2>
+            <p>Configure a DHCP server for the network <strong>192.168.10.0/24</strong>:</p>
+            <ul>
+                <li>IP Range: 192.168.10.11 to 192.168.10.254</li>
+                <li>Default Gateway: 192.168.10.1</li>
+                <li>DNS Server: 8.8.8.8</li>
+                <li>Lease Time: 3 days</li>
+            </ul>
+            <p>Test your configuration with <code>ping</code> after setup.</p>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <p>© 2025 DHCP Learning Guide - CCNA Preparation</p>
+    </footer>
+</body>
+</html>
